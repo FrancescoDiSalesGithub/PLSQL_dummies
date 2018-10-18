@@ -1,7 +1,7 @@
 declare
 
 cursor studente_view is select * from studente;
-cursor esami_view is select * from esami;
+cursor esami_view is select * from esame;
 
 type local_studente is record
 (
@@ -15,7 +15,7 @@ type local_studente is record
 type local_esame is record
 (
 
-	id_esame char(2),
+	id_esame char(3),
 	nome varchar2(50)
 
 );
@@ -51,7 +51,7 @@ open esami_view;
 
 	loop
 
-		fetch esami_view into temp_esame.id,temp_esame.nome;
+		fetch esami_view into temp_esame.id_esame,temp_esame.nome;
 		exit when esami_view%notfound;
 
 		dbms_output.put_line('fetching cursore info esami');
