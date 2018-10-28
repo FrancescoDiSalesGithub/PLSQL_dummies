@@ -1,21 +1,37 @@
 declare
 
 i integer;
+m integer;
 j integer;
+
 nodata exception;
-cursor ctrl_bk is select * from studentebk;
+update_data exception;
 
 begin
 
-for i in(select * from studente) loop
- 
-open ctrl_bk;
-dbms_output.put_line(ctrl_bk%rowcount);
+for m in(select count(matricola) as numero from studentebk) loop
 
-
-if(ctrl_bk%rowcount=0)then
-raise nodata;
+if(m.numero=0)then
+ raise nodata;
 else
+ raise update_data;
+end if;
+
+end loop;
+ 
+
+exception 
+
+when nodata then
+
+dbms_output.put_line('inserito nel ramo nodata');
+  for i in (select * from studente) loop
+  insert into studentebk values(i.matricola,i.nome,i.cognome);
+  end loop; 
+
+when update_data then
+
+for i in(select * from studente) loop
 for j in(select * from studentebk) loop
  if(i.matricola=j.matricola) then
   dbms_output.put_line('inserito nel ramo update');
@@ -26,21 +42,12 @@ for j in(select * from studentebk) loop
   end if;
 
   end loop;
-end if;
+  end loop;
 
-end loop;
 
-close ctrl_bk;
-
-exception when nodata then
-
-dbms_output.put_line('inserito nel ramo nodata');
-  for i in (select * from studente) loop
-  insert into studentebk values(i.matricola,i.nome,i.cognome);
-  end loop; 
  
   when others then
-    dbms_output.put_line('eccezzione'); 
+    dbms_output.put_line(SQLERRM); 
 
 
 end;
