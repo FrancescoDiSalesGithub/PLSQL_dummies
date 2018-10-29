@@ -24,15 +24,14 @@ exception
 
 when nodata then
 
-dbms_output.put_line('inserito nel ramo nodata');
   for i in (select * from studente) loop
   insert into studentebk values(i.matricola,i.nome,i.cognome);
   end loop; 
 
 when update_data then
 
-for i in(select * from studente) loop
 for j in(select * from studentebk) loop
+for i in(select * from studente) loop
  if(i.matricola=j.matricola) then
   dbms_output.put_line('inserito nel ramo update');
   update studentebk set nome=i.nome,cognome=i.cognome where matricola=i.matricola;
