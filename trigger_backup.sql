@@ -6,9 +6,9 @@ begin
 if inserting then 
  insert into superheroes_backup values(:NEW.sh_name);
 elsif updating then
-  update superheroes_backup set(sh_name=:NEW.sh_name);
+  update superheroes_backup set sh_name=:NEW.sh_name where sh_name=:OLD.sh_name;
 elsif deleting then
-  delete from superheroes_backup where sh_name=:NEW.sh_name;
+  delete from superheroes_backup where sh_name=:OLD.sh_name;
 end if;
 
 end;
