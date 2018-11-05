@@ -1,4 +1,4 @@
-create trigger
+create or replace trigger sh_backup
 before insert or update or delete on superheroes
 for each row
 begin
