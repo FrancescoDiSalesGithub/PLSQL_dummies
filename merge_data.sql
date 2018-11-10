@@ -1,52 +1,39 @@
-declare
+procedure backup_dati
+is
 
-i integer;
-m integer;
-j integer;
+cursor c1 is select * from studente;
 
-nodata exception;
-update_data exception;
+type studente_record is record(
+
+matricola varchar(50),
+nome varchar(50),
+cognome varchar(50)
+
+);
+
+studente_origin studente_record;
+studente_dest studente_record;
 
 begin
 
-for m in(select count(matricola) as numero from studentebk) loop
-
-if(m.numero=0)then
- raise nodata;
-else
- raise update_data;
-end if;
-
-end loop;
+ open c1;
  
+  loop
 
-exception 
+  fetch c1 into studente_origin.matricola,studente_origin.nome,studente_origin.cognome;
+  exit when c1%notfound;
 
-when nodata then
+  insert into studentibk values(studente_origin.matricola,studente_origin.nome,studente_origin.cognome);
 
-  for i in (select * from studente) loop
-  insert into studentebk values(i.matricola,i.nome,i.cognome);
-  end loop; 
+  exception when DUP_VAL_ON_INDEX then
 
-when update_data then
+   update studentebk set matricola=studente_origin.matricola,nome=studente_origin.nome,cognome=studente_origin.cognome;
 
-for j in(select * from studentebk) loop
-for i in(select * from studente) loop
- if(i.matricola=j.matricola) then
-  dbms_output.put_line('inserito nel ramo update');
-  update studentebk set nome=i.nome,cognome=i.cognome where matricola=i.matricola;
-  else
-  dbms_output.put_line('inserito nel ramo insert');
-  insert into studentebk values(i.matricola,i.nome,i.cognome);
-  end if;
+   end;
 
   end loop;
-  end loop;
 
-
- 
-  when others then
-    dbms_output.put_line(SQLERRM); 
+ close c1;
 
 
 end;
