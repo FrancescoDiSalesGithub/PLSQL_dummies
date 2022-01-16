@@ -25,8 +25,6 @@ Shows how to use a select in pl/sql
 # Donations
 
 If you want to support me donate monero coins (XMR) at:
-`44TABHa24tB47FyvRfjUA6ASDiW26WoMXXtFuKrjXDSAP9ybzshbw6ZFeNwUf2UMGL279DfzLeBkzg6PAsZ5AruMRGDUaZx`
+`4B9WQivaHfd3miDfPKEfCianocGpBx9d8FXycz2vmNW3aBDVKHgkBd9Gmapt4RBVEpTwnehujsiUBBehUiLvnEHs7VFstCC`
 
-or scan the qr-code:
 
-![monero wallet address](https://github.com/FrancescoDiSalesGithub/FrancescoDiSalesGithub/blob/main/qrcode))
